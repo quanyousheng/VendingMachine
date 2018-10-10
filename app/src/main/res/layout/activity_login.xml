@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="本机号码："
+            android:textColor="@color/color_light_black"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/etNo"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:paddingLeft="8dp"
+            android:textSize="18sp"
+            android:textColor="@color/color_light_black"
+            android:background="@drawable/gray_stroke_white_bg_5" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnEnter"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/blue_bg_radius_13"
+        android:text="登陆"
+        android:textColor="@color/color_white"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

@@ -11,7 +11,8 @@ import java.util.List;
 public class ProductByNO {
 
     private int pagecount;
-    private List<Ds> ds;
+
+    private List<DsBean> ds;
 
     public int getPagecount() {
         return pagecount;
@@ -21,35 +22,28 @@ public class ProductByNO {
         this.pagecount = pagecount;
     }
 
-    public List<Ds> getDs() {
+    public List<DsBean> getDs() {
         return ds;
     }
 
-    public void setDs(List<Ds> ds) {
+    public void setDs(List<DsBean> ds) {
         this.ds = ds;
     }
 
-    public static class Ds {
-
+    public static class DsBean {
         private int row_number;
         private int id;
-        private int tmptid;
-        private String aisleno;
+        private int agentid;
+        private int machineid;
+        private int aisleid;
         private int volume;
-        private boolean isonline;
-        private boolean ishotsale;
-        private int status;
         private int productid;
-        private double price_discount;
-        private int sortid;
-        private int classid;
-        private String productname;
-        private String place;
-        private double price;
-        private String spec;
+        private int currentnum;
+        private String aisleno;
         private String img_s;
         private String img_b;
-        private String classname;
+        private String productname;
+        private double price;
 
         public int getRow_number() {
             return row_number;
@@ -67,20 +61,28 @@ public class ProductByNO {
             this.id = id;
         }
 
-        public int getTmptid() {
-            return tmptid;
+        public int getAgentid() {
+            return agentid;
         }
 
-        public void setTmptid(int tmptid) {
-            this.tmptid = tmptid;
+        public void setAgentid(int agentid) {
+            this.agentid = agentid;
         }
 
-        public String getAisleno() {
-            return aisleno;
+        public int getMachineid() {
+            return machineid;
         }
 
-        public void setAisleno(String aisleno) {
-            this.aisleno = aisleno;
+        public void setMachineid(int machineid) {
+            this.machineid = machineid;
+        }
+
+        public int getAisleid() {
+            return aisleid;
+        }
+
+        public void setAisleid(int aisleid) {
+            this.aisleid = aisleid;
         }
 
         public int getVolume() {
@@ -91,30 +93,6 @@ public class ProductByNO {
             this.volume = volume;
         }
 
-        public boolean isIsonline() {
-            return isonline;
-        }
-
-        public void setIsonline(boolean isonline) {
-            this.isonline = isonline;
-        }
-
-        public boolean isIshotsale() {
-            return ishotsale;
-        }
-
-        public void setIshotsale(boolean ishotsale) {
-            this.ishotsale = ishotsale;
-        }
-
-        public int getStatus() {
-            return status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
-
         public int getProductid() {
             return productid;
         }
@@ -123,60 +101,20 @@ public class ProductByNO {
             this.productid = productid;
         }
 
-        public double getPrice_discount() {
-            return price_discount;
+        public int getCurrentnum() {
+            return currentnum;
         }
 
-        public void setPrice_discount(double price_discount) {
-            this.price_discount = price_discount;
+        public void setCurrentnum(int currentnum) {
+            this.currentnum = currentnum;
         }
 
-        public int getSortid() {
-            return sortid;
+        public String getAisleno() {
+            return aisleno;
         }
 
-        public void setSortid(int sortid) {
-            this.sortid = sortid;
-        }
-
-        public int getClassid() {
-            return classid;
-        }
-
-        public void setClassid(int classid) {
-            this.classid = classid;
-        }
-
-        public String getProductname() {
-            return productname;
-        }
-
-        public void setProductname(String productname) {
-            this.productname = productname;
-        }
-
-        public String getPlace() {
-            return place;
-        }
-
-        public void setPlace(String place) {
-            this.place = place;
-        }
-
-        public double getPrice() {
-            return price;
-        }
-
-        public void setPrice(double price) {
-            this.price = price;
-        }
-
-        public String getSpec() {
-            return spec;
-        }
-
-        public void setSpec(String spec) {
-            this.spec = spec;
+        public void setAisleno(String aisleno) {
+            this.aisleno = aisleno;
         }
 
         public String getImg_s() {
@@ -195,12 +133,20 @@ public class ProductByNO {
             this.img_b = img_b;
         }
 
-        public String getClassname() {
-            return classname;
+        public String getProductname() {
+            return productname;
         }
 
-        public void setClassname(String classname) {
-            this.classname = classname;
+        public void setProductname(String productname) {
+            this.productname = productname;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
         }
     }
 }

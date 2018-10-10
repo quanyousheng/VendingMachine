@@ -8,7 +8,7 @@ public class UrlHelper {
 //    public static final String project = "benxiao";
 //      public static final String project = "newaite";
 
-    public static final String URL_IP = "http://192.168.10.131:88";
+    public static final String URL_IP = "http://yyg.zhi-ren.cn";
 //    public static final String URL_IP = "http://benxiao.cnmar.com";
 //    public static final String URL_IP = "http://ims.newaite.com";//新爱特
 

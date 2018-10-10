@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlBg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg"
-    >
+    android:background="@mipmap/bg">
 
     <ImageView
+        android:id="@+id/iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@mipmap/logo"
-        />
+        android:src="@mipmap/logo" />
 
     <Button
         android:id="@+id/btnEnter"
@@ -20,7 +19,7 @@
         android:layout_height="88dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="400dp"
         android:background="@drawable/green_bg_radius_44"
         android:drawableLeft="@mipmap/buy"
         android:drawablePadding="15dp"
@@ -29,6 +28,5 @@
         android:text="购买商品"
         android:textColor="@color/color_white"
         android:textSize="34sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 </RelativeLayout>
