@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_margin="20dp"
+    >
+
+    <EditText
+        android:id="@+id/et"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/white_bg_radius_13"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="10dp"
+        android:textColor="@color/color_light_black"
+        android:textSize="15sp"/>
+
+    <Button
+        android:id="@+id/btnEnter"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:background="@color/color_light_blue"
+        android:gravity="center"
+        android:text="进入设置"
+        android:textColor="@color/color_white"
+        android:textSize="18sp"
+        />
+</LinearLayout>
