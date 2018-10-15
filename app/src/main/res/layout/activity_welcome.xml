@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     android:id="@+id/rlBg"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg">
+    >
 
     <ImageView
         android:id="@+id/iv"
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@mipmap/logo" />
+        android:src="@mipmap/logo"/>
 
     <Button
         android:id="@+id/btnEnter"
@@ -28,5 +29,5 @@
         android:text="购买商品"
         android:textColor="@color/color_white"
         android:textSize="34sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 </RelativeLayout>

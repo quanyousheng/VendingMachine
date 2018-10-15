@@ -33,6 +33,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//      设备编号no存在就直接跳转到广告页
+        if (!SPHelper.getString(this, "no").equals("")) {
+            startActivity(new Intent(this, WelcomeActivity.class));
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
@@ -68,9 +72,10 @@ public class LoginActivity extends AppCompatActivity {
                             if (machineLogin.getCode() == 0) {
                                 ToastUtil.showToast(LoginActivity.this, machineLogin.getMsg());
                             } else {
-//                              存储设备编号no，根据该编号获取设备关联的商品
-                                SPHelper.putString(LoginActivity.this,"no",no);
-                                Intent intent=new Intent(LoginActivity.this,WelcomeActivity.class);
+//                              存储设备编号no、串口类型，根据该编号no获取设备关联的商品
+                                SPHelper.putString(LoginActivity.this, "no", no);
+                                SPHelper.putString(LoginActivity.this, "serialtype", machineLogin.getModel().getSerialtype());
+                                Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
                                 startActivity(intent);
                             }
                         }

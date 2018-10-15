@@ -19,3 +19,21 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn com.xuhao.android.libsocket.**
+-dontwarn com.xuhao.android.common.**
+-dontwarn com.xuhao.android.server.**
+
+-keep class com.xuhao.android.common.** { *; }
+-keep class com.xuhao.android.server.** { *; }
+-keep class com.xuhao.android.libsocket.** { *; }
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep class com.xuhao.android.socket.sdk.OkSocketOptions$* {
+    *;
+}
+-keep class com.xuhao.android.server.impl.OkServerOptions$* {
+    *;
+}

@@ -1,6 +1,8 @@
 package retrofit;
 
+import model.Ad;
 import model.MachineLogin;
+import model.PayOrder;
 import model.Product;
 import model.ProductByNO;
 import retrofit2.http.GET;
@@ -37,4 +39,18 @@ public interface ApiService {
             @Query("mackey") String mackey
     );
 
+    /*
+   *获得广告图
+   * */
+    @GET("GetAdvList")
+    Observable<Ad> getAdvList(
+    );
+
+    /*
+  *支付
+  * */
+    @GET("PayOrder")
+    Observable<PayOrder> pay(
+            @Query("id") int id
+    );
 }
