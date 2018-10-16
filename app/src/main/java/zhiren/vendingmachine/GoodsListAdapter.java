@@ -22,7 +22,7 @@ public class GoodsListAdapter extends SuperAdapter<ProductByNO.DsBean> {
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, ProductByNO.DsBean item) {
         holder.setText(R.id.tvNo,item.getAisleno());
         holder.setText(R.id.tvName,item.getProductname());
-        holder.setText(R.id.tvMoney,item.getPrice()+"");
+        holder.setText(R.id.tvMoney,String.format("%s 元",item.getPrice()));
         ImageView imageView=holder.findViewById(R.id.image);
         Glide.with(imageView.getContext()).load(item.getImg_s()).into(imageView);
     }

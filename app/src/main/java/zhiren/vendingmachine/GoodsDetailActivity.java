@@ -1,9 +1,7 @@
 package zhiren.vendingmachine;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -11,7 +9,6 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageView;
@@ -70,12 +67,13 @@ public class GoodsDetailActivity extends AppCompatActivity implements WMSerialpo
     TextView tvPay;
 
     private int id;
-    private boolean showQR = false;//支付二维码是否显示
     private IConnectionManager mManager;
     private ConnectionInfo mInfo;
     private OkSocketOptions mOkOptions;
     private static final String ServerIP = "120.79.10.40";
     private static final int ServerPort = 10001;
+    private AlertDialog dialog;
+    private ImageView ivQR;
     private SocketActionAdapter adapter = new SocketActionAdapter() {
 
         @Override
@@ -142,14 +140,15 @@ public class GoodsDetailActivity extends AppCompatActivity implements WMSerialpo
         Log.d("totaltokl", id + "");
         WMSerialportManager.initWMSerialport(getApplicationContext(), 15 * 1000);
 
+        initDialog();
         initManager();
         getDetail(id);
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-//               详情页一分钟内用户没有操作或者弹出支付三分钟屏幕就会跳转到广告页面
-                if ((!showQR && chronometer.getText().toString().substring(3).equals("59"))
-                        || (showQR && chronometer.getText().toString().substring(1, 2).equals("3"))) {
+//              用户三分钟没有触摸屏幕就会跳转到广告页面
+                if (chronometer.getText().toString().substring(1, 2).equals("3")) {
+                    chronometer.stop();
                     startActivity(new Intent(GoodsDetailActivity.this, WelcomeActivity.class));
                 }
 
@@ -165,30 +164,46 @@ public class GoodsDetailActivity extends AppCompatActivity implements WMSerialpo
                 finish();
                 break;
             case R.id.tvPay:
-                chronometer.setBase(SystemClock.elapsedRealtime());//计时前时间清零
-                chronometer.start();
+//                chronometer.setBase(SystemClock.elapsedRealtime());//计时前时间清零
+//                chronometer.start();
                 getPayQR(id);
                 break;
         }
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                //有按下动作时取消定时
-                //stopTimer();
-                chronometer.stop();
-                break;
-            case MotionEvent.ACTION_UP:
-                //抬起时启动定时
-                //startTimer();
-                chronometer.setBase(SystemClock.elapsedRealtime());//计时前时间清零
-                chronometer.start();
-                break;
-        }
-        return super.dispatchTouchEvent(ev);
+
+    public void initDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(GoodsDetailActivity.this);
+        View v = LayoutInflater.from(GoodsDetailActivity.this).inflate(R.layout.dialog_scan_qr, null);
+        ImageView ivCancel = v.findViewById(R.id.ivCancel);
+        ivQR = v.findViewById(R.id.ivQR);
+        dialog = builder.create();
+        dialog.getWindow().setContentView(v);
+        ivCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
+
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                //有按下动作时取消定时
+//                //stopTimer();
+//                chronometer.stop();
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                //抬起时启动定时
+//                //startTimer();
+//                chronometer.setBase(SystemClock.elapsedRealtime());//计时前时间清零
+//                chronometer.start();
+//                break;
+//        }
+//        return super.dispatchTouchEvent(ev);
+//    }
 
     private void initManager() {
         mInfo = new ConnectionInfo(ServerIP, ServerPort);
@@ -237,7 +252,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements WMSerialpo
                         public void onNext(Product product) {
                             tvName.setText(product.getProductname());
                             tvDetail.setText(product.getDescr());
-                            tvMoney.setText(product.getPrice() + "");
+                            tvMoney.setText(String.format("%s 元",product.getPrice()));
                             tvGoodsNo.setText(product.getLotno());
                             Glide.with(GoodsDetailActivity.this).load(product.getImg_b()).into(iv);
                         }
@@ -264,28 +279,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements WMSerialpo
                         if (payOrder.getCode() == 0) {
                             ToastUtil.showToast(GoodsDetailActivity.this, payOrder.getMsg());
                         } else {
-                            showQR = true;
-                            AlertDialog.Builder builder = new AlertDialog.Builder(GoodsDetailActivity.this);
-                            View v = LayoutInflater.from(GoodsDetailActivity.this).inflate(R.layout.dialog_scan_qr, null);
-                            ImageView ivCancel = v.findViewById(R.id.ivCancel);
-                            ImageView ivQR = v.findViewById(R.id.ivQR);
-                            final Dialog dialog = builder.create();
                             dialog.show();
-                            dialog.getWindow().setContentView(v);
-                            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialog) {
-                                    showQR = false;
-                                    chronometer.setBase(SystemClock.elapsedRealtime());//计时前时间清零
-                                    chronometer.start();
-                                }
-                            });
-                            ivCancel.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                }
-                            });
                             Bitmap bitmap = new QREncode.Builder(GoodsDetailActivity.this)
                                     .setColor(getResources().getColor(R.color.color_light_black))//二维码颜色
                                     //.setParsedResultType(ParsedResultType.TEXT)//默认是TEXT类型

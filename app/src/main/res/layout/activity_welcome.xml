@@ -16,8 +16,8 @@
 
     <Button
         android:id="@+id/btnEnter"
-        android:layout_width="315dp"
-        android:layout_height="88dp"
+        android:layout_width="450dp"
+        android:layout_height="128dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="400dp"
@@ -25,9 +25,9 @@
         android:drawableLeft="@mipmap/buy"
         android:drawablePadding="15dp"
         android:gravity="center_vertical"
-        android:paddingLeft="60dp"
+        android:paddingLeft="80dp"
         android:text="购买商品"
         android:textColor="@color/color_white"
-        android:textSize="34sp"
+        android:textSize="60sp"
         android:textStyle="bold"/>
 </RelativeLayout>

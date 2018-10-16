@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Chronometer;
@@ -52,8 +51,6 @@ public class GoodsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        chronometer.setBase(SystemClock.elapsedRealtime());//计时前时间清零
-        chronometer.start();
 
         mAdapter = new GoodsListAdapter(this, dataList, R.layout.goods_item);
         grid.setAdapter(mAdapter);
@@ -61,6 +58,7 @@ public class GoodsListActivity extends AppCompatActivity {
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                chronometer.stop();
                 int dataId = dataList.get(position).getId();
                 Intent intent = new Intent(GoodsListActivity.this, GoodsDetailActivity.class);
                 intent.putExtra("id", dataId);
@@ -70,12 +68,20 @@ public class GoodsListActivity extends AppCompatActivity {
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-//               一分钟内用户没有操作屏幕就会跳转到广告页面
-                if (chronometer.getText().toString().substring(3).equals("59")) {
+//                三分钟内用户没有操作屏幕就会跳转到广告页面
+                if (chronometer.getText().toString().substring(1, 2).equals("2")) {
+                    chronometer.stop();
                     startActivity(new Intent(GoodsListActivity.this, WelcomeActivity.class));
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        chronometer.setBase(SystemClock.elapsedRealtime());//计时前时间清零
+        chronometer.start();
     }
 
     @OnClick({R.id.tvLast, R.id.llBack, R.id.tvNext})
@@ -98,16 +104,14 @@ public class GoodsListActivity extends AppCompatActivity {
                 if (page > 1) {
                     tvLast.setVisibility(View.VISIBLE);
                 }
-                if (total == page) {
-                    tvNext.setVisibility(View.INVISIBLE);
-                }
+
                 Log.d("totaltotal", "page=" + page);
                 getGoodsList(page);
                 break;
         }
     }
 
-    public void getGoodsList(int page) {
+    public void getGoodsList(final int page) {
         String no = SPHelper.getString(this, "no");
         Log.d("totaltotal", no);
         //  缓存的编号为空字符就重新登陆
@@ -138,6 +142,9 @@ public class GoodsListActivity extends AppCompatActivity {
                             if (total > 1) {
                                 tvNext.setVisibility(View.VISIBLE);
                             }
+                            if (total == page) {
+                                tvNext.setVisibility(View.INVISIBLE);
+                            }
                             dataList.addAll(productByNO.getDs());
                             Log.d("totaltotal", dataList.size() + "");
                             mAdapter.notifyDataSetHasChanged();
@@ -147,21 +154,21 @@ public class GoodsListActivity extends AppCompatActivity {
     }
 
     //    监听用户有无屏幕触摸操作
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                //有按下动作时取消定时
-                //stopTimer();
-                chronometer.stop();
-                break;
-            case MotionEvent.ACTION_UP:
-                //抬起时启动定时
-                //startTimer();
-                chronometer.setBase(SystemClock.elapsedRealtime());//计时前时间清零
-                chronometer.start();
-                break;
-        }
-        return super.dispatchTouchEvent(ev);
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                //有按下动作时取消定时
+//                //stopTimer();
+//                chronometer.stop();
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                //抬起时启动定时
+//                //startTimer();
+//                chronometer.setBase(SystemClock.elapsedRealtime());//计时前时间清零
+//                chronometer.start();
+//                break;
+//        }
+//        return super.dispatchTouchEvent(ev);
+//    }
 }

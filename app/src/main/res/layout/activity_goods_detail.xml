@@ -36,8 +36,8 @@
 
         <ImageView
             android:id="@+id/iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="450dp"
+            android:layout_height="450dp"
             android:layout_centerInParent="true"
             android:layout_marginBottom="43dp"
             android:layout_marginTop="43dp"
@@ -159,7 +159,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="120dp"
         android:background="@color/color_light_blue"
         android:paddingBottom="5dp"
         android:paddingTop="5dp">
@@ -167,10 +167,13 @@
         <LinearLayout
             android:id="@+id/llBack"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/white_bg_radius_13"
             android:gravity="center"
             android:paddingBottom="5dp"
@@ -184,7 +187,7 @@
                 android:layout_height="wrap_content"
                 android:text="返回"
                 android:textColor="@color/color_blue"
-                android:textSize="30sp"
+                android:textSize="45sp"
                 android:textStyle="bold"
                 />
 
@@ -194,17 +197,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/color_blue"
-                android:textSize="30sp"
+                android:textSize="45sp"
                 />
         </LinearLayout>
 
         <TextView
             android:id="@+id/tvPay"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/white_bg_radius_13"
             android:gravity="center"
             android:paddingBottom="5dp"
@@ -213,7 +219,7 @@
             android:paddingTop="5dp"
             android:text="去支付"
             android:textColor="@color/color_blue"
-            android:textSize="30sp"
+            android:textSize="45sp"
             android:textStyle="bold"/>
     </RelativeLayout>
 
