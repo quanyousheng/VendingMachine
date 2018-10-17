@@ -1,6 +1,7 @@
 package zhiren.vendingmachine;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -70,10 +71,9 @@ public class GoodsDetailActivity extends AppCompatActivity implements WMSerialpo
     private IConnectionManager mManager;
     private ConnectionInfo mInfo;
     private OkSocketOptions mOkOptions;
+    private Dialog dialog;
     private static final String ServerIP = "120.79.10.40";
     private static final int ServerPort = 10001;
-    private AlertDialog dialog;
-    private ImageView ivQR;
     private SocketActionAdapter adapter = new SocketActionAdapter() {
 
         @Override
@@ -140,7 +140,6 @@ public class GoodsDetailActivity extends AppCompatActivity implements WMSerialpo
         Log.d("totaltokl", id + "");
         WMSerialportManager.initWMSerialport(getApplicationContext(), 15 * 1000);
 
-        initDialog();
         initManager();
         getDetail(id);
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
@@ -164,27 +163,11 @@ public class GoodsDetailActivity extends AppCompatActivity implements WMSerialpo
                 finish();
                 break;
             case R.id.tvPay:
-//                chronometer.setBase(SystemClock.elapsedRealtime());//计时前时间清零
-//                chronometer.start();
-                getPayQR(id);
+                if (dialog == null || (dialog != null && !dialog.isShowing())) {
+                    getPayQR(id);
+                }
                 break;
         }
-    }
-
-
-    public void initDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(GoodsDetailActivity.this);
-        View v = LayoutInflater.from(GoodsDetailActivity.this).inflate(R.layout.dialog_scan_qr, null);
-        ImageView ivCancel = v.findViewById(R.id.ivCancel);
-        ivQR = v.findViewById(R.id.ivQR);
-        dialog = builder.create();
-        dialog.getWindow().setContentView(v);
-        ivCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
     }
 
 //    @Override
@@ -234,7 +217,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements WMSerialpo
             startActivity(intent);
             finish();
         } else {
-            tvNo.setText(String.format("本机号码：%s", no));
+            tvNo.setText(String.format("本机编号：%s", no));
             Api.getDefault().getProductInfo(id)
                     .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<Product>() {
@@ -252,7 +235,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements WMSerialpo
                         public void onNext(Product product) {
                             tvName.setText(product.getProductname());
                             tvDetail.setText(product.getDescr());
-                            tvMoney.setText(String.format("%s 元",product.getPrice()));
+                            tvMoney.setText(String.format("%s 元", product.getPrice()));
                             tvGoodsNo.setText(product.getLotno());
                             Glide.with(GoodsDetailActivity.this).load(product.getImg_b()).into(iv);
                         }
@@ -279,7 +262,20 @@ public class GoodsDetailActivity extends AppCompatActivity implements WMSerialpo
                         if (payOrder.getCode() == 0) {
                             ToastUtil.showToast(GoodsDetailActivity.this, payOrder.getMsg());
                         } else {
+                            Log.d("dialogdialog", "dialog");
+                            AlertDialog.Builder builder = new AlertDialog.Builder(GoodsDetailActivity.this);
+                            View v = LayoutInflater.from(GoodsDetailActivity.this).inflate(R.layout.dialog_scan_qr, null);
+                            ImageView ivCancel = v.findViewById(R.id.ivCancel);
+                            ImageView ivQR = v.findViewById(R.id.ivQR);
+                            dialog = builder.create();
                             dialog.show();
+                            dialog.getWindow().setContentView(v);
+                            ivCancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
                             Bitmap bitmap = new QREncode.Builder(GoodsDetailActivity.this)
                                     .setColor(getResources().getColor(R.color.color_light_black))//二维码颜色
                                     //.setParsedResultType(ParsedResultType.TEXT)//默认是TEXT类型

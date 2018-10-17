@@ -120,7 +120,7 @@ public class GoodsListActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            tvNo.setText(String.format("本机号码：%s", no));
+            tvNo.setText(String.format("本机编号：%s", no));
             Api.getDefault().getMachineProductByNO(no, 24, page)
                     .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<ProductByNO>() {
@@ -138,15 +138,14 @@ public class GoodsListActivity extends AppCompatActivity {
                         public void onNext(ProductByNO productByNO) {
                             dataList.clear();
                             total = productByNO.getPagecount();
-                            Log.d("totaltotal", total + "");
                             if (total > 1) {
-                                tvNext.setVisibility(View.VISIBLE);
-                            }
-                            if (total == page) {
-                                tvNext.setVisibility(View.INVISIBLE);
+                                if (page < total) {
+                                    tvNext.setVisibility(View.VISIBLE);
+                                } else {
+                                    tvNext.setVisibility(View.INVISIBLE);
+                                }
                             }
                             dataList.addAll(productByNO.getDs());
-                            Log.d("totaltotal", dataList.size() + "");
                             mAdapter.notifyDataSetHasChanged();
                         }
                     });

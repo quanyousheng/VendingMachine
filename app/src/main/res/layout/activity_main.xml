@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0ebce1"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/top">
+        android:layout_height="100dp"
+        android:background="@color/color_white"
+        >
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/logo"
+            />
 
         <TextView
             android:id="@+id/tvNo"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="#660c5274"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="本机编号 02496048548"
-            android:textColor="@color/color_white"
-            android:textSize="26sp" />
+            android:textColor="#00708c"
+            android:textSize="26sp"/>
     </LinearLayout>
 
     <GridView
@@ -33,12 +43,12 @@
         android:horizontalSpacing="20dp"
         android:numColumns="4"
         android:scrollbars="none"
-        android:verticalSpacing="20dp" />
+        android:verticalSpacing="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/color_light_blue"
+        android:background="@color/color_white"
         android:paddingBottom="5dp"
         android:paddingTop="5dp">
 
@@ -59,7 +69,7 @@
             android:textColor="@color/color_white"
             android:textSize="45sp"
             android:textStyle="bold"
-            android:visibility="invisible" />
+            android:visibility="invisible"/>
 
         <LinearLayout
             android:id="@+id/llBack"
@@ -78,7 +88,7 @@
                 android:text="返回"
                 android:textColor="@color/color_blue"
                 android:textSize="45sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <Chronometer
                 android:id="@+id/chronometer"
@@ -86,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/color_blue"
-                android:textSize="45sp" />
+                android:textSize="45sp"/>
         </LinearLayout>
 
         <TextView
@@ -106,6 +116,6 @@
             android:textColor="@color/color_white"
             android:textSize="45sp"
             android:textStyle="bold"
-            android:visibility="invisible" />
+            android:visibility="invisible"/>
     </LinearLayout>
 </LinearLayout>
